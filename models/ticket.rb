@@ -58,4 +58,15 @@ class Ticket
     return Customer.map_items(sql)
   end
 
+  def sell_ticket
+    sql = "SELECT funds FROM customers WHERE id = #{@customer_id}"
+    funds = SqlRunner.run(sql)
+    sql2 = "SELECT price FROM films WHERE id = #{@film_id}"
+    price = SqlRunner.run(sql2)
+    new_funds = funds - price
+    sql3 = "UPDATE customers SET funds = #{new_funds} WHERE id = #{@customer_id}"
+    sell_ticket = SqlRunner.run(sql3)
+    return Customers
+  end
+  
 end
